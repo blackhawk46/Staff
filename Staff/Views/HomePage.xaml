@@ -1,0 +1,132 @@
+﻿<UserControl x:Class="Staff.Views.HomePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:ctrls="clr-namespace:Staff.Views.Controls"
+             xmlns:menu="clr-namespace:Staff.Views.Menu"
+             DataContext="{Binding Source={StaticResource Locator}, Path=MainView}"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        
+        <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type ctrls:MenuItemControl}">
+            <Grid Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <ContentControl Grid.Column="0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Focusable="False"
+                                IsTabStop="False"
+                                Content="{Binding Tag}" />
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           Text="{Binding Label}" />
+            </Grid>
+        </DataTemplate>
+
+    </UserControl.Resources>
+
+    <Grid>
+
+        <controls:HamburgerMenu
+            x:Name="HamburgerMenuControl"
+            ItemTemplate="{StaticResource HamburgerMenuItem}"
+            OptionsItemTemplate="{StaticResource HamburgerMenuItem}"
+            ItemClick="HamburgerMenu_OnItemClick"
+            OptionsItemClick="HamburgerMenu_OnOptionsItemClick"
+            DisplayMode="CompactOverlay"
+            HamburgerWidth="48"
+            PanePlacement="Left"
+            IsPaneOpen="False"
+            SelectedIndex="0"
+            PaneBackground="RoyalBlue"
+            ContentTransition="Default">
+
+            <controls:HamburgerMenu.ItemsSource>
+                <controls:HamburgerMenuItemCollection>
+
+                    <ctrls:MenuItemControl Label="Сотрудники">
+                        <ctrls:MenuItemControl.Content>
+                            <menu:EmployeeView/>
+                        </ctrls:MenuItemControl.Content>
+                        <ctrls:MenuItemControl.Tag>
+                            <iconPacks:PackIconFontAwesome
+                                Width="24"
+                                Height="24"
+                                Kind="UsersSolid" />
+                        </ctrls:MenuItemControl.Tag>
+                    </ctrls:MenuItemControl>
+
+                    <ctrls:MenuItemControl Label="Отделы">
+                        <ctrls:MenuItemControl.Content>
+                            <menu:DepartmentsView/>
+                        </ctrls:MenuItemControl.Content>
+                        <ctrls:MenuItemControl.Tag>
+                            <iconPacks:PackIconMaterial
+                                Width="24"
+                                Height="24"
+                                Kind="CheckboxMultipleMarkedCircleOutline" />
+                        </ctrls:MenuItemControl.Tag>
+                    </ctrls:MenuItemControl>
+
+                    <ctrls:MenuItemControl Label="Должности">
+                        <ctrls:MenuItemControl.Content>
+                            <menu:PositionsView/>
+                        </ctrls:MenuItemControl.Content>
+                        <ctrls:MenuItemControl.Tag>
+                            <iconPacks:PackIconBoxIcons
+                                Width="24"
+                                Height="24"
+                                Kind="SolidIdCard" />
+                        </ctrls:MenuItemControl.Tag>
+                    </ctrls:MenuItemControl>
+
+                    <ctrls:MenuItemControl Label="Отчёты">
+                        <ctrls:MenuItemControl.Content>
+                            <menu:ReportsView/>
+                        </ctrls:MenuItemControl.Content>
+                        <ctrls:MenuItemControl.Tag>
+                            <iconPacks:PackIconBoxIcons
+                                Width="24"
+                                Height="24"
+                                Kind="SolidReport" />
+                        </ctrls:MenuItemControl.Tag>
+                    </ctrls:MenuItemControl>
+
+                </controls:HamburgerMenuItemCollection>
+            </controls:HamburgerMenu.ItemsSource>
+
+            <controls:HamburgerMenu.OptionsItemsSource>
+                <controls:HamburgerMenuItemCollection>
+                    <ctrls:MenuItemControl Label="Настройки">
+                        <ctrls:MenuItemControl.Content>
+                            <menu:SettingsView/>
+                        </ctrls:MenuItemControl.Content>
+                        <ctrls:MenuItemControl.Tag>
+                            <iconPacks:PackIconFontAwesome
+                                Width="24"
+                                Height="24"
+                                Kind="CogSolid" />
+                        </ctrls:MenuItemControl.Tag>
+                    </ctrls:MenuItemControl>
+                </controls:HamburgerMenuItemCollection>
+            </controls:HamburgerMenu.OptionsItemsSource>
+
+            <controls:HamburgerMenu.ContentTemplate>
+                <DataTemplate DataType="{x:Type ctrls:MenuItemControl}">
+                        <controls:MetroContentControl
+                            Content="{Binding Content}" />
+                </DataTemplate>
+            </controls:HamburgerMenu.ContentTemplate>
+
+        </controls:HamburgerMenu>
+
+    </Grid>
+</UserControl>
